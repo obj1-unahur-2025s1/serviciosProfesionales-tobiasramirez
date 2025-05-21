@@ -1,13 +1,58 @@
 class ProfesionalVinculado {
-    var juana = new ProfesionalVinculado
-    method puedeTrabajarEn() = self.universidad().provincia()
+    var universidad 
+    method puedeTrabajarEn() = [self.universidad().provincia()]
     method honorarios() = self.universidad().honorarios()
+    method universidad() = universidad
 }
 class ProfesionalLitoral {
-    method puedeTrabajarEn() = santaFe && entreRios && corrientes
+    var universidad 
+    const litoral = [entreRios, santaFe, corrientes]
+    method puedeTrabajarEn() = litoral
     method honorarios() = 3000
 }
 class ProfesionalesLibres{
-    method puedeTrabajarEn() = self.provincia()
-    method honorarios() = self.honorarios()
+    var puedeTrabajarEn 
+    var honorarios 
+    var universidad 
+    method puedeTrabajarEn() = [puedeTrabajarEn]
+    method honorarios() = honorarios
+    method universidad() = universidad
+}
+object empresa {
+    const contratados = []
+    method cuantosEstudiaronEn(unaUniversidad) = contratados.count({c=>c.universidad()==unaUniversidad})
+    method profesionalesCaros() = #{contratados.filter({c=>c.honorarios()>self.honorarios()})}
+    method honorarios() = 5000
+    method universidadesFormadoras() = #{contratados.map({c=>c.universidad()})}
+    method profesionalMasBarato() = contratados.min({c=>c.honorarios()})
+    method esDeGenteAcotada() = contratados.all({c=>c.puedeTrabajarEn().size() <= 3})
+}
+
+object uniRosario {
+    method provincia() = santaFe
+    method honorarios() = 2800
+}
+object uniSanMartin {
+    method provincia() = buenosAires
+    method honorarios() = 3500
+}
+object unahur {
+    method provincia() = buenosAires
+    method honorarios() = 8800
+}
+object uniCorrientes {
+    method provincia() = corrientes
+    method honorarios() = 4200
+}
+object entreRios {
+  
+}
+object santaFe {
+
+}
+object corrientes {
+  
+}
+object buenosAires {
+
 }
