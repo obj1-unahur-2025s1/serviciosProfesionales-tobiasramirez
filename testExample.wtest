@@ -1,9 +1,73 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
+describe "parte 1" {
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  test "dos estudiaron en rosario, uno en hurlingham y ninguno en san martin" {
+    var juanita = new ProfesionalVinculado(universidad = uniRosario)
+    var melina = new ProfesionalLitoral(universidad = uniCorrientes)
+    var rocio = new ProfesionalesLibres(universidad = unahur , honorarios = 5000 , puedeTrabajarEn = [cordoba, santaFe, buenosAires])
+    var luciana = new ProfesionalesLibres(universidad = uniRosario , honorarios = 3200 , puedeTrabajarEn = [santaFe, entreRios])
+    empresa.contratarA(juanita)
+    empresa.contratarA(melina)
+    empresa.contratarA(rocio)
+    empresa.contratarA(luciana)
+    assert.equals(2, empresa.cuantosEstudiaronEn(uniRosario))
+    assert.equals(1, empresa.cuantosEstudiaronEn(unahur))
+    assert.equals(0, empresa.cuantosEstudiaronEn(uniSanMartin))
   }
-
+test "solo rocio como profesional caro" {
+   var juanita = new ProfesionalVinculado(universidad = uniRosario)
+    var melina = new ProfesionalLitoral(universidad = uniCorrientes)
+    var rocio = new ProfesionalesLibres(universidad = unahur , honorarios = 5000 , puedeTrabajarEn = [cordoba, santaFe, buenosAires])
+    var luciana = new ProfesionalesLibres(universidad = uniRosario , honorarios = 3200 , puedeTrabajarEn = [santaFe, entreRios])
+    empresa.contratarA(juanita)
+    empresa.contratarA(melina)
+    empresa.contratarA(rocio)
+    empresa.contratarA(luciana)
+    assert.equals(#{rocio}, empresa.profesionalesCaros())
+}
+test "universidades formadoras son rosario, corrientes y unahur" {
+   var juanita = new ProfesionalVinculado(universidad = uniRosario)
+    var melina = new ProfesionalLitoral(universidad = uniCorrientes)
+    var rocio = new ProfesionalesLibres(universidad = unahur , honorarios = 5000 , puedeTrabajarEn = [cordoba, santaFe, buenosAires])
+    var luciana = new ProfesionalesLibres(universidad = uniRosario , honorarios = 3200 , puedeTrabajarEn = [santaFe, entreRios])
+    empresa.contratarA(juanita)
+    empresa.contratarA(melina)
+    empresa.contratarA(rocio)
+    empresa.contratarA(luciana)
+    assert.equals(#{uniCorrientes , uniRosario, unahur}, empresa.universidadesFormadoras())
+}
+test "juanita es el profesional mas barato" {
+   var juanita = new ProfesionalVinculado(universidad = uniRosario)
+    var melina = new ProfesionalLitoral(universidad = uniCorrientes)
+    var rocio = new ProfesionalesLibres(universidad = unahur , honorarios = 5000 , puedeTrabajarEn = [cordoba, santaFe, buenosAires])
+    var luciana = new ProfesionalesLibres(universidad = uniRosario , honorarios = 3200 , puedeTrabajarEn = [santaFe, entreRios])
+    empresa.contratarA(juanita)
+    empresa.contratarA(melina)
+    empresa.contratarA(rocio)
+    empresa.contratarA(luciana)
+    assert.equals(juanita, empresa.profesionalMasBarato())
+}
+test "es acotada" {
+   var juanita = new ProfesionalVinculado(universidad = uniRosario)
+    var melina = new ProfesionalLitoral(universidad = uniCorrientes)
+    var rocio = new ProfesionalesLibres(universidad = unahur , honorarios = 5000 , puedeTrabajarEn = [cordoba, santaFe, buenosAires])
+    var luciana = new ProfesionalesLibres(universidad = uniRosario , honorarios = 3200 , puedeTrabajarEn = [santaFe, entreRios])
+    empresa.contratarA(juanita)
+    empresa.contratarA(melina)
+    empresa.contratarA(rocio)
+    empresa.contratarA(luciana)
+    assert.that(empresa.esDeGenteAcotada())
+}
+test "si le agregamos dos provincias mas a luciana, ya no es acotada" {
+   var juanita = new ProfesionalVinculado(universidad = uniRosario)
+    var melina = new ProfesionalLitoral(universidad = uniCorrientes)
+    var rocio = new ProfesionalesLibres(universidad = unahur , honorarios = 5000 , puedeTrabajarEn = [cordoba, santaFe, buenosAires])
+    var luciana = new ProfesionalesLibres(universidad = uniRosario , honorarios = 3200 , puedeTrabajarEn = [santaFe, entreRios, buenosAires, cordoba])
+    empresa.contratarA(juanita)
+    empresa.contratarA(melina)
+    empresa.contratarA(rocio)
+    empresa.contratarA(luciana)
+    assert.notThat(empresa.esDeGenteAcotada())
+}
 }

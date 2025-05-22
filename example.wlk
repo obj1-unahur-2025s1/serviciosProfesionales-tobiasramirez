@@ -9,23 +9,27 @@ class ProfesionalLitoral {
     const litoral = [entreRios, santaFe, corrientes]
     method puedeTrabajarEn() = litoral
     method honorarios() = 3000
+    method universidad() = universidad
 }
 class ProfesionalesLibres{
     var puedeTrabajarEn 
     var honorarios 
     var universidad 
-    method puedeTrabajarEn() = [puedeTrabajarEn]
+    method puedeTrabajarEn() = puedeTrabajarEn
     method honorarios() = honorarios
     method universidad() = universidad
 }
 object empresa {
     const contratados = []
+    var honorarios = 3500
     method cuantosEstudiaronEn(unaUniversidad) = contratados.count({c=>c.universidad()==unaUniversidad})
-    method profesionalesCaros() = #{contratados.filter({c=>c.honorarios()>self.honorarios()})}
-    method honorarios() = 5000
-    method universidadesFormadoras() = #{contratados.map({c=>c.universidad()})}
+    method profesionalesCaros() = contratados.filter({c=>c.honorarios()>self.honorarios()}).asSet()
+    method honorarios() = honorarios
+    method honorarios(nuevo) {honorarios = nuevo}
+    method universidadesFormadoras() = contratados.map({c=>c.universidad()}).asSet()
     method profesionalMasBarato() = contratados.min({c=>c.honorarios()})
     method esDeGenteAcotada() = contratados.all({c=>c.puedeTrabajarEn().size() <= 3})
+    method contratarA(profesional) = contratados.add(profesional)
 }
 
 object uniRosario {
@@ -55,4 +59,7 @@ object corrientes {
 }
 object buenosAires {
 
+}
+object cordoba {
+  
 }
