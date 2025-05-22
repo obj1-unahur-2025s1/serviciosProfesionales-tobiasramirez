@@ -30,6 +30,24 @@ object empresa {
     method profesionalMasBarato() = contratados.min({c=>c.honorarios()})
     method esDeGenteAcotada() = contratados.all({c=>c.puedeTrabajarEn().size() <= 3})
     method contratarA(profesional) = contratados.add(profesional)
+    method contratados() = contratados
+    method puedeSatisfacerA(solicitante) = solicitante.puedeSerAtendido()
+}
+class persona {
+    var provincia
+    method provincia() = provincia
+    method puedeSerAtendido() = empresa.contratados().any({c=>c.puedeTrabajarEn().contains(self.provincia())})
+}
+class institucion{
+  var universidades
+  method universidades() = universidades
+  method puedeSerAtendido() = empresa.contratados().any({c=>institucion.universidades().contains(c.universidad())})
+
+}
+class club {
+    var provincia
+    method provincia()= provincia
+    method puedeSerAtendido() = self.provincia().any({p=>empresa.contratados().puedeTrabajarEn().contains(p)})
 }
 
 object uniRosario {
