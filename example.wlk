@@ -38,8 +38,8 @@ object asociacionLitoral {
   method recaudado() = recaudado
 
 }
-class empresa {
-    const clientes []
+class Empresa {
+    const clientes = []
     const contratados = []
     method clientes() = clientes
     var honorarios = 3500
@@ -63,18 +63,18 @@ class empresa {
     method cuantosClientesTiene() = clientes.size()
     method tieneComoClienteA(alguien) = self.clientes().contains(alguien)
 }
-class persona {
+class Persona {
     var provincia
     method provincia() = provincia
     method puedeSerAtendidoPor(profesional) = profesional.puedeTrabajarEn().contains(self.provincia())
 }
-class institucion{
+class Institucion{
   var universidades
   method universidades() = universidades
   method puedeSerAtendidoPor(profesional) = self.universidades().contains(profesional.universidad())
 
 }
-class club {
+class Club {
     var provincia
     method provincia()= provincia
     method puedeSerAtendidoPor(profesional) = profesional.puedeTrabajarEn().contains(self.provincia().any())
