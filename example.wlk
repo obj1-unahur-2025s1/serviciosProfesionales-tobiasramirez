@@ -4,6 +4,7 @@ class ProfesionalVinculado {
     method puedeTrabajarEn() = [self.universidad().provincia()]
     method honorarios() = self.universidad().honorarios()
     method universidad() = universidad
+    method universidad(nueva) {universidad = nueva}
     method cobrar(importe) {
         universidad.recaudar(importe/2)
     }
@@ -14,6 +15,7 @@ class ProfesionalLitoral {
     method puedeTrabajarEn() = litoral
     method honorarios() = 3000
     method universidad() = universidad
+    method universidad(nueva) {universidad = nueva}
     method cobrar(importe) {
         asociacionLitoral.recaudar(importe)
     }
@@ -62,22 +64,32 @@ class Empresa {
     }
     method cuantosClientesTiene() = clientes.size()
     method tieneComoClienteA(alguien) = self.clientes().contains(alguien)
+    method tieneAlguienQueTrabajaEnElMismoLugarYMasBarato(provincia,honorario) =
+        self.contratados().any({c=>c.puedeTrabajarEn().contains(provincia) && c.honorarios() < honorario})
+    
+    method esPocoAtractivo(unProfesional) {
+        const provinciasProf = unProfesional.puedeTrabajarEn().asSet()
+        const profMismasProv = contratados.filter({c=>c.puedeTrabajarEn() == provinciasProf})
+        return profMismasProv.any({p=>p.honorarios() < unProfesional.honorarios()})
+    }
+    
 }
 class Persona {
     var provincia
-    method provincia() = provincia
+    method provincia() = provincia.asList()
+    method provincia(nueva) {provincia = nueva}
     method puedeSerAtendidoPor(profesional) = profesional.puedeTrabajarEn().contains(self.provincia())
 }
 class Institucion{
-  var universidades
+  const universidades =#{}
   method universidades() = universidades
   method puedeSerAtendidoPor(profesional) = self.universidades().contains(profesional.universidad())
 
 }
 class Club {
-    var provincia
-    method provincia()= provincia
-    method puedeSerAtendidoPor(profesional) = profesional.puedeTrabajarEn().contains(self.provincia().any())
+    const provincias = #{}
+    method provincias()= provincias
+    method puedeSerAtendidoPor(profesional) = !provincias.intersection(profesional.puedeTrabajarEn()).isEmpty()
 }
 
 object uniRosario {
