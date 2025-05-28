@@ -60,7 +60,7 @@ class Empresa {
         if (self.algunoPuedeAtenderA(cliente)) {
             self.losQuePuedenAtenderA(cliente).anyone().cobrar(self.honorarios())
             clientes.add(cliente)
-        }
+        } else {self.error( cliente + " No puede ser atendido por la empresa")}
     }
     method cuantosClientesTiene() = clientes.size()
     method tieneComoClienteA(alguien) = self.clientes().contains(alguien)
@@ -68,12 +68,20 @@ class Empresa {
         self.contratados().any({c=>c.puedeTrabajarEn().contains(provincia) && c.honorarios() < honorario})
     
     method esPocoAtractivo(unProfesional) {
+        /*solucion del profesor cursada pasada*/
         const provinciasProf = unProfesional.puedeTrabajarEn().asSet()
         const profMismasProv = contratados.filter({c=>c.puedeTrabajarEn() == provinciasProf})
         return profMismasProv.any({p=>p.honorarios() < unProfesional.honorarios()})
     }
-    
+   method esPocoAtractivo2(profesional) {
+    /*solucion de cristian en clase*/
+        return contratados.any({c=>c.puedeTrabajarEn().all({provincia=>self.existeOtroQueCubraMasBarato(provincia,profesional)})})
+    }
+    method existeOtroQueCubraMasBarato(provincia,profesional){
+    return contratados.any({c=>c.puedeTrabajarEn().contains(provincia) && c.honorarios() < profesional.honorarios()})
+    }
 }
+
 class Persona {
     var provincia
     method provincia() = provincia.asList()
